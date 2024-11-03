@@ -110,7 +110,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="7e2d8" class="javax.swing.JTable" binding="tableClientes">
+                  <component id="7e2d8" class="javax.swing.JTable" binding="tableClientes" custom-create="true">
                     <constraints/>
                     <properties/>
                   </component>

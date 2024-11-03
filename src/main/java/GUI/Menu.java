@@ -21,13 +21,12 @@ public class Menu extends JFrame {
     private JButton btnActualizar;
     private JMenuItem btnSalir;
     private JMenuItem btnNuevo;
-
-    private DefaultTableModel modelClientes= new DefaultTableModel();
+    private DefaultTableModel modelClientes;
+    private ServicioCliente servicioCliente;
     public Menu() throws SQLException {
 
-        ServicioCliente servicioCliente= new ServicioCliente();
+
         initComponents();
-        inicTable(servicioCliente);
         btnSalir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -82,6 +81,7 @@ public class Menu extends JFrame {
             }
         });
     }
+
     private void initComponents() {
         setContentPane(mainPanel);
         setSize(800, 600);
@@ -91,50 +91,45 @@ public class Menu extends JFrame {
         setVisible(true);
         setResizable(false);
     }
-    public void inicTable(ServicioCliente servicioCliente) throws SQLException {
+    private void createUIComponents() throws SQLException {
+        // TODO: place custom component creation code here
+        this.modelClientes=new DefaultTableModel(0,0);
         final String[] COLUMNAS={"ID","Nombre","Apellido","Cedula","Direccion","Telefono","email"};
-        tableClientes.setEnabled(false);
-        //inicializamos un objeto con los array de las fillas
-        List<Object[]> datos= new ArrayList<>();
-        //insertamos los array al instante para evitar llamar a arrayCliente durante la construccion de la tabla
-        for(int i=0;i<servicioCliente.listaClientes().size();i++){
-            datos.add(arrayClientes(i,servicioCliente));
-        }
-        modelClientes.setColumnIdentifiers(COLUMNAS);
-        tableClientes.setModel(modelClientes);
-        //insertamos cada uno de los arrays del arraylist
-        for(Object[] fila:datos){
-            modelClientes.addRow(fila);
-        }
-        // Vuelve a habilitar la tabla y refresca la vista
-        tableClientes.setEnabled(true);
-        tableClientes.updateUI();  // Redibuja la tabla una vez que todas las filas se han agregado
 
+        modelClientes.setColumnIdentifiers(COLUMNAS);
+        this.tableClientes=new JTable(modelClientes);
+
+        listarClientes();
     }
 
-    private String[] arrayClientes(int i,ServicioCliente servicioCliente){
+    private void listarClientes(){
+        this.servicioCliente=new ServicioCliente();
         try {
-            var cliente=servicioCliente.listaClientes().get(i);
-            String[] clientesArray=new String[7];
-            clientesArray[0]=String.valueOf(cliente.getIdCliente());
-            clientesArray[1]=cliente.getNombre();
-            clientesArray[2]=cliente.getApellido();
-            clientesArray[3]=String.valueOf(cliente.getCedula());
-            clientesArray[4]=cliente.getDireccion();
-            clientesArray[5]=String.valueOf(cliente.getTelefono());
-            clientesArray[6]=cliente.getEmail();
+            modelClientes.setRowCount(0);
+            var clientes=servicioCliente.listaClientes();
+            clientes.forEach(cliente->{
+                Object[] filaClientes={
+                    cliente.getIdCliente(),
+                            cliente.getNombre(),
+                            cliente.getApellido(),
+                            String.valueOf(cliente.getCedula()),
+                            cliente.getDireccion(),
+                            String.valueOf(cliente.getTelefono()),
+                            cliente.getEmail()
+                };
+                modelClientes.addRow(filaClientes);
+            });
 
-            return clientesArray;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
     public static void main(String[] args) throws SQLException {
         FlatMacDarkLaf.setup();
         Menu menu = new Menu();
         menu.initComponents();
 
     }
-
 }
 
