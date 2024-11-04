@@ -59,6 +59,56 @@
                   </component>
                 </children>
               </grid>
+              <grid id="f7c1d" class="javax.swing.JMenu" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints/>
+                <properties>
+                  <text value="Habitaciones"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="32dde" class="javax.swing.JMenuItem" binding="btnHabs">
+                    <constraints/>
+                    <properties>
+                      <horizontalAlignment value="2"/>
+                      <horizontalTextPosition value="2"/>
+                      <text value="Nueva"/>
+                    </properties>
+                  </component>
+                  <component id="172db" class="javax.swing.JMenuItem" binding="btnHabsReservadas">
+                    <constraints/>
+                    <properties>
+                      <horizontalAlignment value="2"/>
+                      <horizontalTextPosition value="2"/>
+                      <text value="reservados"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="3a4d2" class="javax.swing.JMenu" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints/>
+                <properties>
+                  <text value="Restaurante"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="a4a4f" class="javax.swing.JMenuItem">
+                    <constraints/>
+                    <properties>
+                      <horizontalAlignment value="2"/>
+                      <horizontalTextPosition value="2"/>
+                      <text value="Nueva Orden"/>
+                    </properties>
+                  </component>
+                  <component id="3f087" class="javax.swing.JMenuItem">
+                    <constraints/>
+                    <properties>
+                      <horizontalAlignment value="2"/>
+                      <horizontalTextPosition value="2"/>
+                      <text value="Reservadas"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
             </children>
           </grid>
           <grid id="a387d" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">

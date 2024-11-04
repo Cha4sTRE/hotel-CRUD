@@ -27,8 +27,9 @@ public class NuevoCliente extends JFrame{
     private JButton btnActualizar;
     private JLabel titulo2;
     private JLabel titulo1;
-    private boolean bandera=false;
-    public NuevoCliente() {
+    private Menu menu;
+    public NuevoCliente(Menu menu) {
+        this.menu = menu;
         btnActualizar.enable(false);
         btnActualizar.setVisible(false);
         IServicioCliente servicioCliente= new ServicioCliente();
@@ -49,7 +50,7 @@ public class NuevoCliente extends JFrame{
                     if(insert){
                         JOptionPane.showMessageDialog(null, "Cliente agregado exitosamente");
                         dispose();
-                        Menu.main(null);
+                        menu.listarClientes();
                     }
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
@@ -65,30 +66,27 @@ public class NuevoCliente extends JFrame{
             boolean encontrado=servicioCliente.buscarCliente(cliente);
             titulo1.setText("Actualizar Cliente");
             titulo2.setText(cliente.getNombre());
-            btnActualizar.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if(encontrado){
+            btnActualizar.addActionListener(e -> {
+                if(encontrado){
 
-                        String nombre = txtNombre.getText();
-                        String apellido = txtApellido.getText();
-                        int cedula = Integer.parseInt(txtCedula.getText());
-                        int telefono = Integer.parseInt(txtTelefono.getText());
-                        String direccion = txtDireccion.getText();
-                        String email = txtEmail.getText();
-                        boolean actualizado= false;
-                        try {
-                            actualizado = servicioCliente.actualizarCliente(new Cliente(cliente.getIdCliente(),nombre,apellido,cedula,telefono,direccion,email));
-                            if(actualizado){
-                                JOptionPane.showMessageDialog(null, "Cliente actualizado exitosamente");
-                                dispose();
-                                Menu.main(null);
-                            }
-                        } catch (SQLException ex) {
-                            throw new RuntimeException(ex);
+                    String nombre = txtNombre.getText();
+                    String apellido = txtApellido.getText();
+                    int cedula = Integer.parseInt(txtCedula.getText());
+                    int telefono = Integer.parseInt(txtTelefono.getText());
+                    String direccion = txtDireccion.getText();
+                    String email = txtEmail.getText();
+                    boolean actualizado= false;
+                    try {
+                        actualizado = servicioCliente.actualizarCliente(new Cliente(cliente.getIdCliente(),nombre,apellido,cedula,telefono,direccion,email));
+                        if(actualizado){
+                            JOptionPane.showMessageDialog(null, "Cliente actualizado exitosamente");
+                            menu.listarClientes();
+                            dispose();
                         }
-
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
                     }
+
                 }
             });
 
